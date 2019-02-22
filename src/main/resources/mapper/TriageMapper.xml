@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baizhi.dao.TriageMapper">
+    <resultMap id="BaseResultMap" type="com.baizhi.entity.Triage">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="illness_info" jdbcType="VARCHAR" property="illnessInfo"/>
+        <result column="advice" jdbcType="VARCHAR" property="advice"/>
+        <result column="pid" jdbcType="VARCHAR" property="pid"/>
+        <result column="did" jdbcType="VARCHAR" property="did"/>
+        <result column="uid" jdbcType="VARCHAR" property="uid"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, status, illness_info, advice, pid, did, uid
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_triage
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_triage
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.baizhi.entity.Triage">
+    insert into t_triage (id, status, illness_info, 
+      advice, pid, did, uid
+      )
+    values (#{id,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{illnessInfo,jdbcType=VARCHAR}, 
+      #{advice,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, #{did,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.baizhi.entity.Triage">
+        insert into t_triage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="illnessInfo != null">
+                illness_info,
+            </if>
+            <if test="advice != null">
+                advice,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="did != null">
+                did,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="illnessInfo != null">
+                #{illnessInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="advice != null">
+                #{advice,jdbcType=VARCHAR},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=VARCHAR},
+            </if>
+            <if test="did != null">
+                #{did,jdbcType=VARCHAR},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.baizhi.entity.Triage">
+        update t_triage
+        <set>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="illnessInfo != null">
+                illness_info = #{illnessInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="advice != null">
+                advice = #{advice,jdbcType=VARCHAR},
+            </if>
+            <if test="pid != null">
+                pid = #{pid,jdbcType=VARCHAR},
+            </if>
+            <if test="did != null">
+                did = #{did,jdbcType=VARCHAR},
+            </if>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.baizhi.entity.Triage">
+    update t_triage
+    set status = #{status,jdbcType=INTEGER},
+      illness_info = #{illnessInfo,jdbcType=VARCHAR},
+      advice = #{advice,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=VARCHAR},
+      did = #{did,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <resultMap id="BaseResultMap" type="com.baizhi.entity.Triage">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="illness_info" jdbcType="VARCHAR" property="illnessInfo"/>
+        <result column="advice" jdbcType="VARCHAR" property="advice"/>
+        <result column="pid" jdbcType="VARCHAR" property="pid"/>
+        <result column="did" jdbcType="VARCHAR" property="did"/>
+        <result column="uid" jdbcType="VARCHAR" property="uid"/>
+    </resultMap>
+    <select id="selectReg" resultMap="BaseResultMap">
+    SELECT * FROM t_triage WHERE pid=#{id}
+  </select>
+</mapper>

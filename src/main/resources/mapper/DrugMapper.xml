@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.DrugDao">
+    <select id="selectByPage" resultType="com.baizhi.entity.Drug">
+    SELECT t1.* FROM t_drug t1 LEFT JOIN t_exam t2 ON t1.id = t2.d_id
+    WHERE t1.status=0 AND t2.exam_status=2
+    limit #{start},#{rows}
+  </select>
+    <select id="selectAccount" resultType="int">
+    SELECT COUNT(1) FROM t_drug t1 LEFT JOIN t_exam t2 ON t1.id = t2.d_id WHERE t1.status=0 AND t2.exam_status=2
+  </select>
+    <insert id="insert">
+    INSERT INTO t_drug VALUES (0,#{name},#{spec},#{unit},#{product_company},#{product_date},#{ok_date},#{import_price},#{price},#{sale_status},#{is_import},#{description},0)
+  </insert>
+    <update id="update">
+    UPDATE t_drug SET name=#{name},spec=#{spec},unit=#{unit},product_company=#{product_company},product_date=#{product_date},ok_date=#{ok_date},import_price=#{import_price},price=#{price},sale_status=#{sale_status},is_import=#{is_import},description=#{description}
+    WHERE id=#{id}
+  </update>
+    <update id="multiDelete">
+        UPDATE t_drug SET status=1
+        WHERE id IN
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </update>
+    <select id="selectNew" resultType="com.baizhi.entity.Drug">
+    SELECT * from t_drug WHERE id in (SELECT MAX(id) FROM t_drug)
+  </select>
+    <update id="updateStatus">
+        UPDATE t_drug SET
+        <if test="sale_status==0">
+            sale_status=1
+        </if>
+        <if test="sale_status==1">
+            sale_status=0
+        </if>
+        WHERE id=#{id}
+    </update>
+    <select id="selectDrugById" resultType="com.baizhi.entity.Drug">
+    SELECT * FROM t_drug WHERE id=#{id}
+  </select>
+    <!-- <select id="selectAll" resultType="com.baizhi.entity.User">
+       SELECT * FROM s_student
+     </select>
+     <insert id="insert">
+       INSERT INTO s_student VALUES (0,#{name},23,#{sex})
+     </insert>
+     <delete id="multiDelete">
+       DELETE FROM s_student WHERE id IN
+       <foreach collection="array" open="(" separator="," close=")" item="ids">
+         #{ids}
+       </foreach>
+     </delete>
+     <update id="update">
+       UPDATE s_student SET name=#{name},age=55,sex=#{sex} WHERE id=#{id}
+     </update>-->
+</mapper>
